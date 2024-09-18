@@ -2,6 +2,8 @@
 
 var exArray = [];
 
+/* Funció per afegir un element a la llista */
+
 function submitForm() {
 
     /* Obtenim els elements del DOM */
@@ -34,6 +36,8 @@ function submitForm() {
     updateResults2();
 }
 
+/* Funció per actualitzar la llista de resultats */
+
 function updateResults() {
 
     /* Obtenim els elements del DOM */
@@ -52,6 +56,8 @@ function updateResults() {
     resultListElement.innerHTML = listHTML;
     resultTotalElement.innerHTML = exArray.length;
 }
+
+/* Funció per actualitzar la llista de resultats (versió 2) */
 
 function updateResults2() {
 
@@ -87,6 +93,7 @@ function updateResults2() {
 }
 
 /* Eliminar element del array */
+
 function deleteElement(index) {
     exArray.splice(index, 1);
     updateResults2();
