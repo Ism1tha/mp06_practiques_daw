@@ -27,6 +27,9 @@ function submitForm() {
 
     exArray.push(inputElement.value);
 
+    /* Esborrem el valor del camp de text */
+    inputElement.value = "";
+
     /* Actualitzem la llista */
     updateResults2();
 }
@@ -71,7 +74,7 @@ function updateResults2() {
 
         /* Creem el element de la llista */
         let liElement = document.createElement("li");
-        liElement.textContent = element;
+        liElement.textContent = element + " ";
         liElement.appendChild(btnElement);
 
         /* Afegim el element a la llista */
