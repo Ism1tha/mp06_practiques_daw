@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MP06 - PokemonAPI</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <!-- Main JS -->
+    <script src="assets/js/base.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="assets/css/dataTables-custom.css" />
+    <!-- DataTables JS -->
+    <script src="https:////cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <img
+          src="assets/images/pokemon-logo.png"
+          alt="Pokemon Logo"
+          class="logo"
+          width="350"
+        />
+        <div id="preloader">
+          <img
+            src="assets/images/pokeball.png"
+            alt="Pokeball"
+            class="pokeball-loader"
+          />
+        </div>
+        <div id="pokemon-list" style="display: none">
+          <img
+            src="assets/images/pikachu.gif"
+            alt="Pikachu"
+            class="pikachu mx-auto"
+            onclick="playSound('assets/sounds/pika-pika.mp3')"
+          />
+          <table id="pokemons-table"></table>
+        </div>
+      </div>
+      <div class="author">
+        Made with ❤️ by
+        <a href="https://github.com/ism1tha" target="_blank">Ism1tha</a>
+      </div>
+    </div>
+  </body>
+</html>

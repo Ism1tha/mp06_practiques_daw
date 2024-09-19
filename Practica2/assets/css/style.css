@@ -1,0 +1,119 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/background.jpg');
+    background-size: cover;
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-y: scroll;
+}
+
+.logo {
+    display: inline;
+}
+
+.author {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    color: #ffffff;
+}
+
+.author a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.pokeball-loader {
+    width: 52px;
+    display:block;
+    animation: flash 1000ms infinite;
+}
+
+#pokemon-list {
+    color: #ffffff;
+    width: 69%;
+}
+
+#pokemon-list .pikachu {
+    display: block;
+}
+
+#pokemons-table {
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.75);
+    border: 2px solid #ffffff;
+    padding: 20px 0px;
+}
+
+#pokemons-table .pokemon-info {
+    display: flex;
+    align-items: center;
+}
+
+.btn {
+    padding: 8px;
+    border: 0;
+    border-radius: .2em;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #fcc410;
+}
+
+.btn-secondary {
+    color: #ffffff;
+    background-color: #cb3a14;
+}
+
+.btn-secondary:hover {
+    background-color: #cb2e08;
+}
+
+.btn-danger {
+    color: #ffffff;
+    background-color: #f0896f;
+}
+
+.badge {
+    background-color: #727e84;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+.mx-auto {
+    margin: 0 auto;
+}
+
+/* Animations */
+
+@keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    #pokemon-list {
+        width: 100%;
+        overflow-x: scroll;
+    }
+}
