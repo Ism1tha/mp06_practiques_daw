@@ -17,11 +17,19 @@ var pokemonList = {};
 
 var pokemonsTable = null;
 
-/* Functions */
+/* Application Functions */
 
 async function loadApplication() {
   setApplicationStatus(STATUS_LOADING);
-  await fetchPokemons();
+  if(checkIfDataExists()) {
+    loadData();
+    setApplicationStatus(STATUS_LOADED);
+    alert("Data loaded from local storage");
+  } else {
+    await fetchPokemons();
+    saveData();
+    alert("Data loaded from API and saved to local storage");
+  }
   setApplicationStatus(STATUS_LOADED);
   initializePokemonsTable();
 }
@@ -69,7 +77,9 @@ function setApplicationStatus(status) {
     case STATUS_LOADED:
       hidePreloader();
       showPokemonList();
-      setupBackgroundPokemons();
+      if (window.innerWidth > 768) {
+        setupBackgroundPokemons();
+      }
       break;
     case STATUS_ERROR:
       console.error("Error setting application status");
@@ -116,18 +126,38 @@ function initializePokemonsTable() {
   });
 }
 
-capitalizeFirstLetter = (string) => {
+function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
-};
+}
 
 function extractPokemonId(url) {
   var splitUrl = url.split("/");
   return splitUrl[splitUrl.length - 2];
 }
 
-/* Function to get the class for the color of the badge, lowercase and spaces replaced by hyphens */
 function getBadgeClass(type) {
   return `badge-${type.replace(" ", "-").toLowerCase()}`;
+}
+
+
+/* Data Storage Functions */
+
+function checkIfDataExists() {
+  return localStorage.getItem("pokemonList") !== null;
+}
+
+function saveData() {
+  localStorage.setItem("pokemonList", JSON.stringify(pokemonList));
+}
+
+function loadData() {
+  pokemonList = JSON.parse(localStorage.getItem("pokemonList"));
+}
+
+function deletePokemon(index) {
+  pokemonList.splice(index, 1);
+  saveData();
+  initializePokemonsTable();
 }
 
 /* UX Functions */
@@ -167,8 +197,8 @@ function setupBackgroundPokemons() {
 }
 
 function moveBackgroundPokemonRandomly(element) {
-  var randomX = Math.floor(Math.random() * 90);
-  var randomY = Math.floor(Math.random() * 90);
+  var randomX = Math.floor(Math.random() * 80);
+  var randomY = Math.floor(Math.random() * 80);
   element.style.transform = `translate(${randomX}vw, ${randomY}vh)`;
   setTimeout(() => {
     moveBackgroundPokemonRandomly(element);

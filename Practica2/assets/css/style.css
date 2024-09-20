@@ -201,11 +201,16 @@ html, body {
 
 @media (max-width: 768px) {
     .container {
-        width: 98%;
+        width: 96%;
     }
 
     .author {
         position: static;
         text-align: center;
+    }
+
+    #pokemons-table {
+        border-left: 0;
+        border-right: 0;
     }
 }
