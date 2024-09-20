@@ -662,12 +662,16 @@ div.dt-container {
   clear: both;
 }
 div.dt-container .dt-search input {
-  border: 1px solid #aaa;
+  border: 0px;
   border-radius: 3px;
-  padding: 5px;
+  padding: 0.5em 1em;
   background-color: #ffffff;
   color: #000000;
   margin-left: 3px;
+}
+div.dt-container .dt-search input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #cccccc;
 }
 div.dt-container .dt-input {
   border: 1px solid #aaa;

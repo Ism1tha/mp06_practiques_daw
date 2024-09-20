@@ -26,6 +26,8 @@ var pokemonsTable = null;
 
 var music = new Audio("assets/sounds/music.mp3");
 
+var showingPokemonDetails = false;
+
 /* Application Functions */
 
 async function loadApplication() {
@@ -104,28 +106,34 @@ function initializePokemonsTable() {
     data: pokemonList,
     ordering: false,
     lengthChange: false,
-    columns: [{ data: "name", title: "Pokemon" }, { title: 'Pokemon Type'}, { title: 'Actions' }],
+    columns: [{ data: "name", title: "" }, { data: "name", title: "Pokemon" }, { data: "types", title: "Types" }, { data: "id", title: "Actions" }],
     columnDefs: [
       {
-        targets: 0,
+        targets: 1,
         render: function (data, type, row, meta) {
-          return `<div class="pokemon-info"><img src="${
-            row.image
-          }" alt="${data}" width="25" height="25"> ${capitalizeFirstLetter(
+          return `<div class="pokemon-info">${capitalizeFirstLetter(
             data
           )} (${row.id})</div>`;
         },
       },
       {
-        targets: 1,
+        targets: 0,
         render: function (data, type, row, meta) {
-          return row.types.map((type) => `<span class="badge ${getBadgeClass(type)}">${capitalizeFirstLetter(type)}</span>`).join(" ");
+          return `<img src="${
+            row.image
+          }" alt="${data}" width="30" height="30">`;
         },
       },
       {
         targets: 2,
         render: function (data, type, row, meta) {
-          return `<button class="btn" onclick="showPokemonDetails('${row.url}')">View information</button> <button class="btn btn-secondary" onclick="deletePokemonFromData('${data}')">Delete pokemon</button>`;
+          return row.types.map((type) => `<span class="badge ${getBadgeClass(type)}">${capitalizeFirstLetter(type)}</span>`).join(" ");
+        },
+      },
+      {
+        targets: 3,
+        render: function (data, type, row, meta) {
+          return `<button class="btn" onclick="showPokemonDetails('${row.url}')">View information</button> <button class="btn btn-secondary" onclick="deletePokemonFromData('${meta.row}')">Delete pokemon</button>`;
         },
       },
     ],
@@ -233,7 +241,7 @@ function playBackgroundMusic() {
 }
 
 function playSound(sound) {
-  if(userInteracted) {
+  if(userInteracted && musicStatus === MUSIC_PLAYING) {
     var audio = new Audio(sound);
     audio.play();
   }
@@ -266,13 +274,24 @@ function showToast(message) {
   Toastify({
     text: message,
     offset: {
-      x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-      y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+      x: 50,
+      y: 10,
     },
     style: {
       background: "#14A44D",
     },
   }).showToast();
+}
+
+function showPokemonDetails(index) {
+  playSound("assets/sounds/pc-effect.mp3");
+  document.getElementById("pokemon-modal-overlay").style.display = "block";
+  showingPokemonDetails = true;
+}
+
+function closePokemonDetails() {
+  document.getElementById("pokemon-modal-overlay").style.display = "none";
+  showingPokemonDetails = false;
 }
 
 /* Set timeout, to simulate a delay 3 seconds */

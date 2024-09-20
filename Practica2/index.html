@@ -23,6 +23,18 @@
 </head>
 
 <body>
+    <!-- Pokemon information modal -->
+    <div id="pokemon-modal-overlay">
+        <div id="pokemon-modal" class="modal">
+            <div class="modal-header">
+                <span class="close" onclick="closePokemonDetails()">&times;</span>
+            </div>
+            <div id="pokemon-background">
+                <img src="assets/images/pokemons/charizard.gif" alt="Charizard" />
+                <div id="pokemon-name">Charizard</div>
+            </div>
+        </div>
+    </div>
     <!-- Animated pokemons on background -->
     <img src="assets/images/pokemons/charizard.gif" alt="Charizard" class="background-pokemon" style="display: none;" />
     <img src="assets/images/pokemons/gyarados.gif" alt="Gyarados" class="background-pokemon" style="display: none;" />
