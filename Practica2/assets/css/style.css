@@ -86,6 +86,14 @@ html, body {
     text-decoration: none;
 }
 
+.footer .actions button {
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.75);
+    border: 0px;
+    border-radius: .3em;
+    padding: 0px 4px;
+}
+
 /* Type badge colors */
 
 .badge-grass {

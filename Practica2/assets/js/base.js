@@ -5,31 +5,38 @@
  */
 
 /* Constants */
+
 const API_URL = "https://pokeapi.co/api/v2";
 
 const STATUS_LOADING = "loading";
 const STATUS_LOADED = "loaded";
 const STATUS_ERROR = "error";
 
-/* Variables */
-var applicationStatus = STATUS_LOADING;
-var pokemonList = {};
+const MUSIC_PLAYING = "playing";
+const MUSIC_PAUSED = "paused";
 
+/* Variables */
+
+var applicationStatus = STATUS_LOADING;
+var musicStatus = MUSIC_PAUSED;
+var pokemonList = {};
 var pokemonsTable = null;
+
+var music = new Audio("assets/sounds/music.mp3");
 
 /* Application Functions */
 
 async function loadApplication() {
   setApplicationStatus(STATUS_LOADING);
-  if(checkIfDataExists()) {
-    loadData();
-    setApplicationStatus(STATUS_LOADED);
+  if(checkIfPokemonsDataExists()) {
+    loadPokemonsData();
     showToast("Pokemons data loaded from local storage");
   } else {
     await fetchPokemons();
-    saveData();
-    alert("Pokemons data loaded from API and saved to local storage");
+    savePokemonsData();
+    showToast("Pokemons data fetched from API and saved to local storage");
   }
+  loadMusicStatus();
   setApplicationStatus(STATUS_LOADED);
   initializePokemonsTable();
 }
@@ -116,7 +123,7 @@ function initializePokemonsTable() {
       {
         targets: 2,
         render: function (data, type, row, meta) {
-          return `<button class="btn" onclick="showPokemonDetails('${row.url}')">View information</button> <button class="btn btn-secondary" onclick="deletePokemon('${data}')">Delete pokemon</button>`;
+          return `<button class="btn" onclick="showPokemonDetails('${row.url}')">View information</button> <button class="btn btn-secondary" onclick="deletePokemonFromData('${data}')">Delete pokemon</button>`;
         },
       },
     ],
@@ -142,22 +149,39 @@ function getBadgeClass(type) {
 
 /* Data Storage Functions */
 
-function checkIfDataExists() {
+function checkIfPokemonsDataExists() {
   return localStorage.getItem("pokemonList") !== null;
 }
 
-function saveData() {
+function savePokemonsData() {
   localStorage.setItem("pokemonList", JSON.stringify(pokemonList));
 }
 
-function loadData() {
+function loadPokemonsData() {
   pokemonList = JSON.parse(localStorage.getItem("pokemonList"));
 }
 
-function deletePokemon(index) {
+function deletePokemonFromData(index) {
   pokemonList.splice(index, 1);
-  saveData();
+  savePokemonsData();
   initializePokemonsTable();
+  showToast("Pokemon deleted successfully");
+}
+
+function wipePokemonsData() {
+  localStorage.removeItem("pokemonList");
+  pokemonList = {};
+  loadApplication();
+  showToast("Pokemons data wiped from local storage");
+}
+
+function loadMusicStatus() {
+  musicStatus = localStorage.getItem("musicStatus") || MUSIC_PAUSED;
+  updateMusicButton();
+}
+
+function saveMusicStatus() {
+  localStorage.setItem("musicStatus", musicStatus);
 }
 
 /* UX Functions */
@@ -176,6 +200,31 @@ function hidePokemonList() {
 
 function showPokemonList() {
   document.getElementById("main-content").style.display = "block";
+}
+
+function toggleBackgroundMusic() {
+  if (musicStatus === MUSIC_PLAYING) {
+    musicStatus = MUSIC_PAUSED;
+    music.pause();
+  } else {
+    musicStatus = MUSIC_PLAYING;
+    music.play();
+  }
+  updateMusicButton();
+  saveMusicStatus();
+}
+
+function updateMusicButton() {
+  var musicButton = document.getElementById("music-btn");
+  if (musicStatus === MUSIC_PLAYING) {
+    musicButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><g fill="#ffffff"><path d="M10 16v-5.401A2.999 2.999 0 0 0 10 5.4V0L4.667 4H0v8h4.667z"/><path d="m13.6 3.2l-.799-.6L11.6 4.199l.8.6a4 4 0 0 1 .8.802c.503.668.8 1.497.8 2.399s-.297 1.73-.8 2.4a4 4 0 0 1-.8.8l-.8.601l1.201 1.6l.8-.601a6 6 0 0 0 1.198-1.2A5.98 5.98 0 0 0 16 8c0-1.35-.447-2.598-1.2-3.6a6 6 0 0 0-1.2-1.2"/></g></svg>';
+  } else {
+    musicButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><path fill="#ffffff" d="M9 0v16l-5.333-4H0V4h3.667zm2.586 8l-1.5 1.5l1.414 1.414l1.5-1.5l1.5 1.5L15.914 9.5l-1.5-1.5l1.5-1.5L14.5 5.086l-1.5 1.5l-1.5-1.5L10.086 6.5z"/></svg>';
+  }
+}
+
+function playBackgroundMusic() {
+  music.play();
 }
 
 function playSound(sound) {
@@ -224,4 +273,12 @@ document.addEventListener("DOMContentLoaded", function () {
   setTimeout(() => {
     loadApplication();
   }, 3000);
+});
+
+/* On interact if music is playing but not reproducing play it */
+
+document.addEventListener("click", function () {
+  if (musicStatus === MUSIC_PLAYING && music.paused) {
+    music.play();
+  }
 });
