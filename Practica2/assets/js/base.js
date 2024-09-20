@@ -5,7 +5,7 @@
  */
 
 /* Constants */
-const API_URL = "https://api.themoviedb.org/3/";
+const API_URL = "https://pokeapi.co/api/v2";
 
 const STATUS_LOADING = "loading";
 const STATUS_LOADED = "loaded";
@@ -24,11 +24,11 @@ async function loadApplication() {
   if(checkIfDataExists()) {
     loadData();
     setApplicationStatus(STATUS_LOADED);
-    alert("Data loaded from local storage");
+    showToast("Pokemons data loaded from local storage");
   } else {
     await fetchPokemons();
     saveData();
-    alert("Data loaded from API and saved to local storage");
+    alert("Pokemons data loaded from API and saved to local storage");
   }
   setApplicationStatus(STATUS_LOADED);
   initializePokemonsTable();
@@ -36,7 +36,7 @@ async function loadApplication() {
 
 async function fetchPokemons() {
   try {
-    const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
+    const response = await fetch(API_URL + "/pokemon?limit=151");
     const data = await response.json();
     pokemonList = data.results;
     for (pokemon of pokemonList) {
@@ -203,6 +203,19 @@ function moveBackgroundPokemonRandomly(element) {
   setTimeout(() => {
     moveBackgroundPokemonRandomly(element);
   }, 20000);
+}
+
+function showToast(message) {
+  Toastify({
+    text: message,
+    offset: {
+      x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+      y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+    },
+    style: {
+      background: "#fcc410",
+    },
+  }).showToast();
 }
 
 /* Set timeout, to simulate a delay 3 seconds */
