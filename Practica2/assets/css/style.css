@@ -61,8 +61,8 @@ html, body {
 #pokemons-table {
     background-color: rgba(0, 0, 0, 0.75);
     border: 2px solid #ffffff;
+    border-radius: .3em;
     padding: 20px 0px;
-    width: 100%;
 }
 
 #pokemons-table .pokemon-info {

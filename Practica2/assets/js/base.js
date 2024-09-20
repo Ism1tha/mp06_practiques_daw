@@ -17,6 +17,8 @@ const MUSIC_PAUSED = "paused";
 
 /* Variables */
 
+var userInteracted = false;
+
 var applicationStatus = STATUS_LOADING;
 var musicStatus = MUSIC_PAUSED;
 var pokemonList = {};
@@ -34,7 +36,7 @@ async function loadApplication() {
   } else {
     await fetchPokemons();
     savePokemonsData();
-    showToast("Pokemons data fetched from API and saved to local storage");
+    showToast("Pokemons data fetched and saved to local storage");
   }
   loadMusicStatus();
   setApplicationStatus(STATUS_LOADED);
@@ -128,6 +130,7 @@ function initializePokemonsTable() {
       },
     ],
     language: {
+      search: "",
       searchPlaceholder: 'Pikachu, Bulbasaur, Charmander...',
   }
   });
@@ -154,6 +157,7 @@ function checkIfPokemonsDataExists() {
 }
 
 function savePokemonsData() {
+  playSound("assets/sounds/save-effect.mp3");
   localStorage.setItem("pokemonList", JSON.stringify(pokemonList));
 }
 
@@ -169,6 +173,7 @@ function deletePokemonFromData(index) {
 }
 
 function wipePokemonsData() {
+  if(applicationStatus === STATUS_LOADING) return;
   localStorage.removeItem("pokemonList");
   pokemonList = {};
   loadApplication();
@@ -228,8 +233,10 @@ function playBackgroundMusic() {
 }
 
 function playSound(sound) {
-  var audio = new Audio(sound);
-  audio.play();
+  if(userInteracted) {
+    var audio = new Audio(sound);
+    audio.play();
+  }
 }
 
 function setupBackgroundPokemons() {
@@ -255,6 +262,7 @@ function moveBackgroundPokemonRandomly(element) {
 }
 
 function showToast(message) {
+  playSound("assets/sounds/toast-effect.mp3");
   Toastify({
     text: message,
     offset: {
@@ -262,7 +270,7 @@ function showToast(message) {
       y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
     },
     style: {
-      background: "#fcc410",
+      background: "#14A44D",
     },
   }).showToast();
 }
@@ -278,6 +286,7 @@ document.addEventListener("DOMContentLoaded", function () {
 /* On interact if music is playing but not reproducing play it */
 
 document.addEventListener("click", function () {
+  if(!userInteracted) userInteracted = true;
   if (musicStatus === MUSIC_PLAYING && music.paused) {
     music.play();
   }
