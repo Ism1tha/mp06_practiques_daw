@@ -1,13 +1,11 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
 html, body {
     width: 100%;
     height: 100%;
     margin: 0;
-    font-family: 'Roboto', sans-serif;
-}
-
-.container {
-    width: 100%;
-    height: 100%;
     background-image: url('../images/background.jpg');
     background-size: cover;
 }
@@ -16,55 +14,70 @@ html, body {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
+    overflow-y: scroll;
+}
+
+.container {
+    width: 70%;
+    min-height: calc(100% - 41px);
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow-y: scroll;
 }
 
-.logo {
-    display: inline;
-}
-
-.author {
-    position: absolute;
-    left: 10px;
-    bottom: 10px;
-    color: #ffffff;
-}
-
-.author a {
-    color: #ffffff;
-    text-decoration: none;
+.logo-container {
+    margin-top: 25px;
+    text-align: center;
 }
 
 .pokeball-loader {
     width: 52px;
-    display:block;
+    display: block;
+    margin: 0 auto;
     animation: flash 1000ms infinite;
 }
 
-#pokemon-list {
+#main-content {
     color: #ffffff;
-    width: 69%;
+    width: 100%;
 }
 
-#pokemon-list .pikachu {
+#main-content .pikachu {
     display: block;
+    margin: 0 auto;
 }
 
 #pokemons-table {
-    color: #ffffff;
     background-color: rgba(0, 0, 0, 0.75);
     border: 2px solid #ffffff;
     padding: 20px 0px;
+    width: 100%;
 }
 
 #pokemons-table .pokemon-info {
     display: flex;
     align-items: center;
 }
+
+.footer {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer .author {
+    color: #ffffff;
+}
+
+.footer .author a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* Other styles */
 
 .btn {
     padding: 8px;
@@ -97,9 +110,6 @@ html, body {
     border-radius: 5px;
     font-size: 12px;
 }
-.mx-auto {
-    margin: 0 auto;
-}
 
 /* Animations */
 
@@ -112,8 +122,12 @@ html, body {
 /* Responsive */
 
 @media (max-width: 768px) {
-    #pokemon-list {
+    #main-content {
         width: 100%;
-        overflow-x: scroll;
+    }
+
+    .author {
+        position: static;
+        text-align: center;
     }
 }

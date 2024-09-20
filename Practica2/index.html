@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MP06 - PokemonAPI</title>
@@ -15,38 +16,30 @@
     <link rel="stylesheet" href="assets/css/dataTables-custom.css" />
     <!-- DataTables JS -->
     <script src="https:////cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
-  </head>
+</head>
 
-  <body>
-    <div class="container">
-      <div class="wrapper">
-        <img
-          src="assets/images/pokemon-logo.png"
-          alt="Pokemon Logo"
-          class="logo"
-          width="350"
-        />
-        <div id="preloader">
-          <img
-            src="assets/images/pokeball.png"
-            alt="Pokeball"
-            class="pokeball-loader"
-          />
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="logo-container">
+                <img src="assets/images/pokemon-logo.png" alt="Pokemon Logo" width="300">
+            </div>
+            <div id="preloader">
+                <img src="assets/images/pokeball.png" alt="Pokeball" class="pokeball-loader" />
+            </div>
+            <div id="main-content" style="display: none">
+                <img src="assets/images/pikachu.gif" alt="Pikachu" class="pikachu"
+                    onclick="playSound('assets/sounds/pika-pika.mp3')" />
+                <table id="pokemons-table"></table>
+            </div>
         </div>
-        <div id="pokemon-list" style="display: none">
-          <img
-            src="assets/images/pikachu.gif"
-            alt="Pikachu"
-            class="pikachu mx-auto"
-            onclick="playSound('assets/sounds/pika-pika.mp3')"
-          />
-          <table id="pokemons-table"></table>
+        <div class="footer">
+            <div class="author">
+                Made with ❤️ by
+                <a href="https://github.com/ism1tha" target="_blank">Ism1tha</a>
+            </div>
         </div>
-      </div>
-      <div class="author">
-        Made with ❤️ by
-        <a href="https://github.com/ism1tha" target="_blank">Ism1tha</a>
-      </div>
     </div>
-  </body>
+</body>
+
 </html>
