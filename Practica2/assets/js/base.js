@@ -33,6 +33,7 @@ async function fetchPokemons() {
     pokemonList = data.results;
     for (pokemon of pokemonList) {
       var pokemonData = await fetchPokemonBaseData(pokemon.url);
+      pokemon.id = extractPokemonId(pokemon.url);
       pokemon.image = pokemonData.image;
       pokemon.types = pokemonData.types;
     }
@@ -50,7 +51,6 @@ async function fetchPokemonBaseData(url) {
       image: data.sprites.front_default,
       types: data.types.map((item) => item.type.name),
     };
-    console.log("Pokemon data fetched", pokemonData);
     return pokemonData;
   } catch (error) {
     console.log(error);
@@ -91,7 +91,7 @@ function initializePokemonsTable() {
             row.image
           }" alt="${data}" width="25" height="25"> ${capitalizeFirstLetter(
             data
-          )}</div>`;
+          )} (${row.id})</div>`;
         },
       },
       {
@@ -113,6 +113,11 @@ function initializePokemonsTable() {
 capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
+
+function extractPokemonId(url) {
+  var splitUrl = url.split("/");
+  return splitUrl[splitUrl.length - 2];
+}
 
 /* Function to get the class for the color of the badge, lowercase and spaces replaced by hyphens */
 function getBadgeClass(type) {
