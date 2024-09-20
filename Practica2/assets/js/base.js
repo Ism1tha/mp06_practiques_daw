@@ -107,6 +107,9 @@ function initializePokemonsTable() {
         },
       },
     ],
+    language: {
+      searchPlaceholder: 'Pikachu, Bulbasaur, Charmander...',
+  }
   });
 }
 
