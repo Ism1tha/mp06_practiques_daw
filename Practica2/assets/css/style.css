@@ -1,3 +1,5 @@
+/* Main styles */
+
 * {
     font-family: 'Roboto', sans-serif;
 }
@@ -77,6 +79,76 @@ html, body {
     text-decoration: none;
 }
 
+/* Type badge colors */
+
+.badge-grass {
+    background-color: #78C850; /* Grass Green */
+}
+
+.badge-poison {
+    background-color: #A040A0; /* Poison Purple */
+}
+
+.badge-fire {
+    background-color: #F08030; /* Fire Orange */
+}
+
+.badge-flying {
+    background-color: #A890F0; /* Flying Light Purple */
+}
+
+.badge-water {
+    background-color: #6890F0; /* Water Blue */
+}
+
+.badge-bug {
+    background-color: #A8B820; /* Bug Greenish Yellow */
+}
+
+.badge-normal {
+    background-color: #A8A878; /* Normal Grayish Beige */
+}
+
+.badge-electric {
+    background-color: #F8D030; /* Electric Yellow */
+}
+
+.badge-ground {
+    background-color: #E0C068; /* Ground Brownish Yellow */
+}
+
+.badge-fairy {
+    background-color: #EE99AC; /* Fairy Pink */
+}
+
+.badge-fighting {
+    background-color: #C03028; /* Fighting Red */
+}
+
+.badge-psychic {
+    background-color: #F85888; /* Psychic Pinkish Red */
+}
+
+.badge-rock {
+    background-color: #B8A038; /* Rock Brownish Yellow */
+}
+
+.badge-steel {
+    background-color: #B8B8D0; /* Steel Light Grayish Blue */
+}
+
+.badge-ice {
+    background-color: #98D8D8; /* Ice Light Blue */
+}
+
+.badge-ghost {
+    background-color: #705898; /* Ghost Purple */
+}
+
+.badge-dragon {
+    background-color: #7038F8; /* Dragon Purple */
+}
+
 /* Other styles */
 
 .btn {
@@ -105,7 +177,6 @@ html, body {
 }
 
 .badge {
-    background-color: #727e84;
     padding: 5px 10px;
     border-radius: 5px;
     font-size: 12px;

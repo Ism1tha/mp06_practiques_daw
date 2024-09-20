@@ -97,7 +97,7 @@ function initializePokemonsTable() {
       {
         targets: 1,
         render: function (data, type, row, meta) {
-          return row.types.map((type) => `<span class="badge badge-primary">${capitalizeFirstLetter(type)}</span>`).join(" ");
+          return row.types.map((type) => `<span class="badge ${getBadgeClass(type)}">${capitalizeFirstLetter(type)}</span>`).join(" ");
         },
       },
       {
@@ -113,6 +113,11 @@ function initializePokemonsTable() {
 capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
+
+/* Function to get the class for the color of the badge, lowercase and spaces replaced by hyphens */
+function getBadgeClass(type) {
+  return `badge-${type.replace(" ", "-").toLowerCase()}`;
+}
 
 /* UX Functions */
 
