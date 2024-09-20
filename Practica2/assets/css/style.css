@@ -193,8 +193,8 @@ html, body {
 /* Responsive */
 
 @media (max-width: 768px) {
-    #main-content {
-        width: 100%;
+    .container {
+        width: 98%;
     }
 
     .author {
