@@ -125,11 +125,11 @@ function showPreloader() {
 }
 
 function hidePokemonList() {
-  document.getElementById("pokemon-list").style.display = "none";
+  document.getElementById("main-content").style.display = "none";
 }
 
 function showPokemonList() {
-  document.getElementById("pokemon-list").style.display = "block";
+  document.getElementById("main-content").style.display = "block";
 }
 
 function playSound(sound) {
