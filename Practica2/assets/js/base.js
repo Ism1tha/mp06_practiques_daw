@@ -35,6 +35,7 @@ async function fetchPokemons() {
       var pokemonData = await fetchPokemonBaseData(pokemon.url);
       pokemon.id = extractPokemonId(pokemon.url);
       pokemon.image = pokemonData.image;
+      pokemon.sound = pokemonData.sound;
       pokemon.types = pokemonData.types;
     }
     console.log("Pokemons fetched", pokemonList);
@@ -49,6 +50,7 @@ async function fetchPokemonBaseData(url) {
     const data = await response.json();
     var pokemonData = {
       image: data.sprites.front_default,
+      sound: data.cries.legacy,
       types: data.types.map((item) => item.type.name),
     };
     return pokemonData;
@@ -67,6 +69,7 @@ function setApplicationStatus(status) {
     case STATUS_LOADED:
       hidePreloader();
       showPokemonList();
+      setupBackgroundPokemons();
       break;
     case STATUS_ERROR:
       console.error("Error setting application status");
@@ -148,6 +151,28 @@ function showPokemonList() {
 function playSound(sound) {
   var audio = new Audio(sound);
   audio.play();
+}
+
+function setupBackgroundPokemons() {
+  var backgroundPokemons = document.querySelectorAll(".background-pokemon");
+  backgroundPokemons.forEach((backgroundPokemon) => {
+    backgroundPokemon.style.display = "block";
+    var randomX = Math.floor(Math.random() * 90);
+    var randomY = Math.floor(Math.random() * 90);
+    backgroundPokemon.style.transform = `translate(${randomX}vw, ${randomY}vh)`;
+    setTimeout(() => {
+      moveBackgroundPokemonRandomly(backgroundPokemon);
+    }, 2000);
+  });
+}
+
+function moveBackgroundPokemonRandomly(element) {
+  var randomX = Math.floor(Math.random() * 90);
+  var randomY = Math.floor(Math.random() * 90);
+  element.style.transform = `translate(${randomX}vw, ${randomY}vh)`;
+  setTimeout(() => {
+    moveBackgroundPokemonRandomly(element);
+  }, 20000);
 }
 
 /* Set timeout, to simulate a delay 3 seconds */
