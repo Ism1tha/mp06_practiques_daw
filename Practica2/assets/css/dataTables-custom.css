@@ -383,7 +383,7 @@ table.dataTable tfoot th {
 table.dataTable > thead > tr > th,
 table.dataTable > thead > tr > td {
   padding: 10px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: none;
 }
 table.dataTable > thead > tr > th:active,
 table.dataTable > thead > tr > td:active {
@@ -671,7 +671,7 @@ div.dt-container .dt-search input {
 }
 div.dt-container .dt-search input:focus {
   outline: none;
-  box-shadow: 0 0 0 2px #cccccc;
+  box-shadow: 0 0 0 2px rgb(44,98,170);
 }
 div.dt-container .dt-input {
   border: 1px solid #aaa;
@@ -727,7 +727,7 @@ div.dt-container .dt-search,
 div.dt-container .dt-info,
 div.dt-container .dt-processing,
 div.dt-container .dt-paging {
-  color: inherit;
+  color: #ffffff;
 }
 div.dt-container .dataTables_scroll {
   clear: both;
@@ -803,10 +803,10 @@ div.dt-container
   padding: 0 !important;
 }
 div.dt-container.dt-empty-footer tbody > tr:last-child > * {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: none;
 }
 div.dt-container.dt-empty-footer .dt-scroll-body {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: none;
 }
 div.dt-container.dt-empty-footer .dt-scroll-body tbody > tr:last-child > * {
   border-bottom: none;
@@ -818,7 +818,7 @@ html.dark {
 }
 html.dark table.dataTable > thead > tr > th,
 html.dark table.dataTable > thead > tr > td {
-  border-bottom: 1px solid rgb(89, 91, 94);
+  border-bottom: none;
 }
 html.dark table.dataTable > thead > tr > th:active,
 html.dark table.dataTable > thead > tr > td:active {
@@ -826,7 +826,7 @@ html.dark table.dataTable > thead > tr > td:active {
 }
 html.dark table.dataTable > tfoot > tr > th,
 html.dark table.dataTable > tfoot > tr > td {
-  border-top: 1px solid rgb(89, 91, 94);
+  border-top: none;
 }
 html.dark table.dataTable.row-border > tbody > tr > *,
 html.dark table.dataTable.display > tbody > tr > * {
@@ -851,7 +851,7 @@ html.dark table.dataTable.cell-border > tbody > tr > td:first-child {
   border-left: 1px solid rgb(64, 67, 70);
 }
 html.dark .dt-container.dt-empty-footer table.dataTable {
-  border-bottom: 1px solid rgb(89, 91, 94);
+  border-bottom: none;
 }
 html.dark .dt-container .dt-search input,
 html.dark .dt-container .dt-length select {
@@ -860,7 +860,7 @@ html.dark .dt-container .dt-length select {
 }
 html.dark .dt-container .dt-paging .dt-paging-button.current,
 html.dark .dt-container .dt-paging .dt-paging-button.current:hover {
-  border: 1px solid rgb(89, 91, 94);
+  border: none;
   background: rgba(255, 255, 255, 0.15);
 }
 html.dark .dt-container .dt-paging .dt-paging-button.disabled,
