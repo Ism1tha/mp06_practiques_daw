@@ -106,7 +106,7 @@ function initializePokemonsTable() {
     data: pokemonList,
     ordering: false,
     lengthChange: false,
-    columns: [{ data: "name", title: "Pokemon" }, { data: "types", title: "" }, { data: "url", title: "" }, { data: "url", title: "" }],
+    columns: [{ data: "name" }],
     columnDefs: [
       {
         targets: 0,
@@ -142,7 +142,10 @@ function initializePokemonsTable() {
     language: {
       search: "",
       searchPlaceholder: 'Pikachu, Bulbasaur, Charmander...',
-  }
+    },
+    headerCallback: function(thead) {
+      $(thead).hide();  // Hides the table header
+    }
   });
 }
 
