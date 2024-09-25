@@ -1,5 +1,5 @@
 /**
- * Main JS file for the application for the second practice of the MP06 module (INS Montsià)
+ * Exercici 3 - Pokedex amb API / INS Montsià MP06
  * Author: Ismael Semmar Galvez
  *
  */
