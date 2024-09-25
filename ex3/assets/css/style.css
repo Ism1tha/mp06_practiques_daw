@@ -103,7 +103,7 @@ html, body {
     z-index: 998;
 }
 
-#pokemon-modal {
+#pokemon-modal-overlay .modal {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -115,7 +115,7 @@ html, body {
     border-radius: .3rem;
 }
 
-#pokemon-modal .modal-header {
+#pokemon-modal .modal-actions {
     position: absolute;
     display: flex;
     justify-content: end;
@@ -126,7 +126,7 @@ html, body {
     z-index: 1000;
 }
 
-#pokemon-modal .modal-header .close {
+#pokemon-modal .modal-actions .close {
     background-color: transparent;
     border: 0;
     color: #ffffff;
@@ -135,92 +135,156 @@ html, body {
     cursor: pointer;
 }
 
-#pokemon-modal #pokemon-background {
+#pokemon-background {
     position: relative;
     width: 100%;
     height: 40%;
     color: #ffffff;
-    background-color: #F08030;
     border-radius: .3rem .3rem 0 0;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#pokemon-modal #pokemon-name {
+#pokemon-image {
+    width: 100px;
+    height: 100px;
+}
+
+#pokemon-name {
     position: absolute;
     font-size: 24px;
     left: 10px;
     bottom: 10px;
 }
 
+#pokemon-types {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+.pokemon-stats {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 15px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pokemon-stats-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.pokemon-stats-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.pokemon-stats-row:last-child {
+    border-bottom: none;
+}
+
+.pokemon-stats-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+}
+
+.pokemon-stats-value {
+    font-size: 14px;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.pokemon-stats-value::before {
+    content: "+";
+    font-weight: normal;
+    margin-right: 3px;
+}
+
+.pokemon-stats-row:hover {
+    background-color: #f0f0f0;
+    transition: background-color 0.3s ease;
+}
+
+
 /* Type badge colors */
 
-.badge-grass {
+.grass {
     background-color: #78C850; /* Grass Green */
 }
 
-.badge-poison {
+.poison {
     background-color: #A040A0; /* Poison Purple */
 }
 
-.badge-fire {
+.fire {
     background-color: #F08030; /* Fire Orange */
 }
 
-.badge-flying {
+.flying {
     background-color: #A890F0; /* Flying Light Purple */
 }
 
-.badge-water {
+.water {
     background-color: #6890F0; /* Water Blue */
 }
 
-.badge-bug {
+.bug {
     background-color: #A8B820; /* Bug Greenish Yellow */
 }
 
-.badge-normal {
+.normal {
     background-color: #A8A878; /* Normal Grayish Beige */
 }
 
-.badge-electric {
+.electric {
     background-color: #F8D030; /* Electric Yellow */
 }
 
-.badge-ground {
+.ground {
     background-color: #E0C068; /* Ground Brownish Yellow */
 }
 
-.badge-fairy {
+.fairy {
     background-color: #EE99AC; /* Fairy Pink */
 }
 
-.badge-fighting {
+.fighting {
     background-color: #C03028; /* Fighting Red */
 }
 
-.badge-psychic {
+.psychic {
     background-color: #F85888; /* Psychic Pinkish Red */
 }
 
-.badge-rock {
+.rock {
     background-color: #B8A038; /* Rock Brownish Yellow */
 }
 
-.badge-steel {
+.steel {
     background-color: #B8B8D0; /* Steel Light Grayish Blue */
 }
 
-.badge-ice {
+.ice {
     background-color: #98D8D8; /* Ice Light Blue */
 }
 
-.badge-ghost {
+.ghost {
     background-color: #705898; /* Ghost Purple */
 }
 
-.badge-dragon {
+.dragon {
     background-color: #7038F8; /* Dragon Purple */
 }
 

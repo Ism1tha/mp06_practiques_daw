@@ -26,12 +26,43 @@
     <!-- Pokemon information modal -->
     <div id="pokemon-modal-overlay" style="display: none;">
         <div id="pokemon-modal" class="modal">
-            <div class="modal-header">
+            <div class="modal-actions">
                 <span class="close" onclick="closePokemonDetails()">&times;</span>
             </div>
-            <div id="pokemon-background">
-                <img src="assets/images/pokemons/charizard.gif" alt="Charizard" />
-                <div id="pokemon-name">Charizard</div>
+            <div class="modal-content">
+                <div id="pokemon-background">
+                    <img id="pokemon-image" src="assets/images/pokemons/charizard.gif" alt="Charizard" />
+                    <div id="pokemon-name">Charizard</div>
+                    <div id="pokemon-types"><span class="badge badge-grass">Grass</span> <span class="badge badge-poison">Poison</span></div>
+                </div>
+                <!-- Pokemon Information base stats -->
+                <div class="pokemon-stats">
+                    <div class="pokemon-stats-title">Base Stats</div>
+                    <div class="pokemon-stats-row">
+                        <div class="pokemon-stats-label">HP</div>
+                        <div id="pokemon-hp" class="pokemon-stats-value">45</div>
+                    </div>
+                    <div class="pokemon-stats-row">
+                        <div class="pokemon-stats-label">Attack</div>
+                        <div id="pokemon-attack" class="pokemon-stats-value">49</div>
+                    </div>
+                    <div class="pokemon-stats-row">
+                        <div class="pokemon-stats-label">Defense</div>
+                        <div id="pokemon-defense" class="pokemon-stats-value">49</div>
+                    </div>
+                    <div class="pokemon-stats-row">
+                        <div class="pokemon-stats-label">Special Attack</div>
+                        <div id="pokemon-special-attack" class="pokemon-stats-value">65</div>
+                    </div>
+                    <div class="pokemon-stats-row">
+                        <div class="pokemon-stats-label">Special Defense</div>
+                        <div id="pokemon-special-defense" class="pokemon-stats-value">65</div>
+                    </div>
+                    <div class="pokemon-stats-row">
+                        <div class="pokemon-stats-label">Speed</div>
+                        <div id="pokemon-speed" class="pokemon-stats-value">45</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
