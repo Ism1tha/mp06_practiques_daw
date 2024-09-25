@@ -10,7 +10,6 @@ const API_URL = "https://pokeapi.co/api/v2";
 
 const STATUS_LOADING = "loading";
 const STATUS_LOADED = "loaded";
-const STATUS_ERROR = "error";
 
 const MUSIC_PLAYING = "playing";
 const MUSIC_PAUSED = "paused";
@@ -36,9 +35,16 @@ async function loadApplication() {
     loadPokemonsData();
     showToast("Pokemons data loaded from local storage");
   } else {
-    await fetchPokemons();
-    savePokemonsData();
-    showToast("Pokemons data fetched and saved to local storage");
+    if(await fetchPokemons()) {
+      savePokemonsData();
+      showToast("Pokemons data fetched and saved to local storage");
+    }
+    else {
+      setTimeout(() => {
+        loadApplication();
+      }, 3000);
+      return; 
+    }
   }
   loadMusicStatus();
   setApplicationStatus(STATUS_LOADED);
@@ -58,8 +64,10 @@ async function fetchPokemons() {
       pokemon.types = pokemonData.types;
     }
     console.log("Pokemons fetched", pokemonList);
+    return true;
   } catch (error) {
-    console.error("Error fetching pokemons", error);
+    showToast("Error fetching pokemons data");
+    return false;
   }
 }
 
@@ -92,9 +100,6 @@ function setApplicationStatus(status) {
         setupBackgroundPokemons();
       }
       break;
-    case STATUS_ERROR:
-      console.error("Error setting application status");
-      break;
   }
 }
 
@@ -106,7 +111,7 @@ function initializePokemonsTable() {
     data: pokemonList,
     ordering: false,
     lengthChange: false,
-    columns: [{ data: "name" }],
+    columns: [{ data: "name", title: "Pokemon" }, { title: "Types" }, { title: "Audio" }, { title: "Actions" }],
     columnDefs: [
       {
         targets: 0,
@@ -144,7 +149,7 @@ function initializePokemonsTable() {
       searchPlaceholder: 'Pikachu, Bulbasaur, Charmander...',
     },
     headerCallback: function(thead) {
-      $(thead).hide();  // Hides the table header
+      //$(thead).hide();  // Hides the table header
     }
   });
 }
@@ -161,7 +166,6 @@ function extractPokemonId(url) {
 function getBadgeClass(type) {
   return `badge-${type.replace(" ", "-").toLowerCase()}`;
 }
-
 
 /* Data Storage Functions */
 
