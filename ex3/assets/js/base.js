@@ -112,7 +112,7 @@ function initializePokemonsTable() {
   }
   pokemonsTable = $("#pokemons-table").DataTable({
     data: pokemonList,
-    ordering: false,
+    ordering: true,
     lengthChange: false,
     columns: [{ data: "name", title: "Pokemon" }, { title: "Types" }, { title: "Audio" }, { title: "Actions" }],
     columnDefs: [
@@ -134,6 +134,7 @@ function initializePokemonsTable() {
       },
       {
         targets: 2,
+        orderable: false,
         render: function (data, type, row, meta) {
           return `<button class="btn btn-third" onclick="playSound('${row.sound}')">
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><g fill="#ffffff"><path d="M10 16v-5.401A2.999 2.999 0 0 0 10 5.4V0L4.667 4H0v8h4.667z"/><path d="m13.6 3.2l-.799-.6L11.6 4.199l.8.6a4 4 0 0 1 .8.802c.503.668.8 1.497.8 2.399s-.297 1.73-.8 2.4a4 4 0 0 1-.8.8l-.8.601l1.201 1.6l.8-.601a6 6 0 0 0 1.198-1.2A5.98 5.98 0 0 0 16 8c0-1.35-.447-2.598-1.2-3.6a6 6 0 0 0-1.2-1.2"/></g></svg>
@@ -142,6 +143,7 @@ function initializePokemonsTable() {
       },
       {
         targets: 3,
+        orderable: false,
         render: function (data, type, row, meta) {
           return `<button class="btn btn-primary" onclick="showPokemonDetails('${meta.row}')"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><g fill="#ffffff"><path d="M8 10a2 2 0 1 0 0-4a2 2 0 0 0 0 4"/><path d="m15.356 7.478l.027.051l.235.471l-.236.47l-.026.052a13 13 0 0 1-.464.794a14 14 0 0 1-1.399 1.853C12.303 12.492 10.427 14 8 14s-4.302-1.508-5.493-2.831A14 14 0 0 1 .644 8.522l-.027-.051L.382 8l.235-.47a6 6 0 0 1 .125-.232a14 14 0 0 1 1.765-2.467C3.697 3.508 5.573 2 8 2s4.302 1.508 5.493 2.831a14 14 0 0 1 1.863 2.647m-12.558.768c.276.436.68 1.013 1.195 1.585C5.053 11.008 6.427 12 8 12s2.948-.992 4.007-2.169A12 12 0 0 0 13.354 8a12 12 0 0 0-1.347-1.831C10.947 4.992 9.573 4 8 4s-2.948.992-4.007 2.169A12 12 0 0 0 2.646 8q.068.113.152.246"/></g></svg></button> <button class="btn btn-secondary" onclick="deletePokemonFromData('${meta.row}')"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><g fill="#ffffff"><path d="M7 7v5h2V7z"/><path d="M11 0H5v3H0v2h1.165l1.553 8.537A3 3 0 0 0 5.669 16h4.662a3 3 0 0 0 2.952-2.463L14.835 5H16V3h-5zM9 3H7V2h2zM4.685 13.179L3.198 5h9.604l-1.487 8.179a1 1 0 0 1-.984.821H5.669a1 1 0 0 1-.984-.821"/></g></svg></button>`;
         },
