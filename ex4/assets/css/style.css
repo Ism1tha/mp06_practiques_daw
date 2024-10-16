@@ -6,5 +6,20 @@
 }
 
 html, body {
+    background-color: #fff;
     margin: 0;
+}
+
+#invoices-table tbody td {
+    padding: 12px 8px;
+    text-align: center;
+}
+
+#invoices-table tbody td:nth-child(3),
+#invoices-table tbody td:nth-child(4) {
+    text-align: right;
+}
+
+#invoices-table tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
