@@ -1,77 +1,170 @@
 /**
- * Exercici 3 - Pokedex amb API / INS Montsià MP06
+ * Exercici 4 - CalculatorAPI / INS Montsià MP06
  * Author: Ismael Semmar Galvez
  *
  */
-
 /* Constants */
+
+const STATUS_DRAFT = 1;
+const STATUS_SENT = 2;
+const STATUS_PAID = 3;
 
 /* Variables */
 
-var showingInvoice = false;
+var invoices = [];
 
-var invoices = [
-  {
-    id: 1,
-    status:  1,
-    date: "2021-12-01",
-    dueDate: "2021-12-31",
-    customer: {
-      name: "John Doe",
-      address: "123 Main St",
-      city: "Springfield",
-    },
-    items: [
-      {
-        description: "Widget",
-        quantity: 2,
-        price: 10.0,
-      },
-      {
-        description: "Thing",
-        quantity: 3,
-        price: 15.0,
-      },
-    ],
-  }
-]
+var invoicesTable = null;
 
 /* Application Functions */
 
-function statusToText(status) {
-  switch (status) {
-    case 1:
-      return "Draft";
-    case 2:
-      return "Sent";
-    case 3:
-      return "Paid";
-    default:
-      return "Unknown";
-  }
+function loadApplication() {
+  initializeInvoicesTable();
 }
 
-/* Data Storage Functions */
-
-/* UX Functions */
-
-function setupInvoicesTable() { //DataTable.js 
-  var table = $('#invoices-table').DataTable({
+function initializeInvoicesTable() {
+  if (invoicesTable) {
+    invoicesTable.destroy();
+  }
+  invoicesTable = $("#invoices-table").DataTable({
     data: invoices,
     columns: [
-      { data: 'id' },
-      { data: 'status', render: statusToText },
-      { data: 'date' },
-      { data: 'dueDate' },
-      { data: 'customer.name' },
+      { data: "id", title: "ID" },
+      { 
+        data: "status", 
+        title: "Status", 
+        render: function (data, type, row) {
+          return `<span class="${getStatusColor(data)}">${statusToText(data)}</span>`; 
+        } 
+      },
+      { data: "date", title: "Date" },
+      { data: "customer.name", title: "Customer" },
+      {
+        data: "items",
+        title: "Items",
+        render: function (data) {
+          return data.length + " item(s)";
+        },
+      },
+      {
+        data: "items",
+        title: "Total",
+        render: function (data) {
+          return calculateInvoiceTotal(data) + " USD";
+        },
+      },
       {
         data: null,
+        title: "Actions",
+        render: function (data, type, row, meta) {
+          return `
+            <button onclick="editInvoice(${row.id})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 4 rounded">
+              Edit
+            </button> 
+            <button onclick="deleteInvoice(${row.id})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2">
+              Delete
+            </button> 
+            <select onchange="updateInvoiceStatus(${row.id}, this.value)" class="border border-gray-400 rounded px-4 py-2 ml-2">
+              <option value="${STATUS_DRAFT}" ${row.status === STATUS_DRAFT ? 'selected' : ''}>Draft</option>
+              <option value="${STATUS_SENT}" ${row.status === STATUS_SENT ? 'selected' : ''}>Sent</option>
+              <option value="${STATUS_PAID}" ${row.status === STATUS_PAID ? 'selected' : ''}>Paid</option>
+            </select>`;
+        },
+      },
+    ],
+    language: {
+      search: "",
+      searchPlaceholder: "Search...",
+    },
+  });
+}
+
+function statusToText(status) {
+  return status === STATUS_DRAFT ? "Draft" : status === STATUS_SENT ? "Sent" : "Paid";
+}
+
+function calculateInvoiceTotal(items) {
+  return items.reduce((sum, item) => sum + parseFloat(item.quantity) * parseFloat(item.rate), 0).toFixed(2);
+}
+
+function setupItemsTable(itemsData = []) {
+  $('#items-table').DataTable({
+    destroy: true,
+    data: itemsData,
+    dom: 't',
+    columns: [
+      {
+        data: 'name',
+        title: 'Name',
+        render: function (data, type, row, meta) {
+          return `<input type="text" value="${data}" onchange="updateItem(${meta.row}, 'name', this.value)" class="w-full p-1 border rounded" />`;
+        }
+      },
+      {
+        data: 'quantity',
+        title: 'Quantity',
+        render: function (data, type, row, meta) {
+          return `<input type="number" value="${data}" onchange="updateItem(${meta.row}, 'quantity', this.value)" class="w-full p-1 border rounded" />`;
+        }
+      },
+      {
+        data: 'rate',
+        title: 'Rate',
+        render: function (data, type, row, meta) {
+          return `<input type="number" value="${data}" onchange="updateItem(${meta.row}, 'rate', this.value)" class="w-full p-1 border rounded" />`;
+        }
+      },
+      {
+        data: null,
+        title: 'Total',
         render: function (data, type, row) {
-          return `<button class="block mx-auto px-4 py-2 rounded bg-blue-400 text-white flex items-center" onclick="showInvoice(${row.id})"><svg class="inline w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"> <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" /> </svg>Edit invoice</button>`;
+          return (parseFloat(row.quantity) * parseFloat(row.rate)).toFixed(2);
+        }
+      },
+      {
+        data: null,
+        title: 'Actions',
+        render: function () {
+          return '<button onclick="removeItem(this)" class="bg-red-500 text-white px-2 py-1 rounded">Remove</button>';
         }
       }
     ]
   });
+}
+
+function updateItem(rowIndex, field, value) {
+  const itemsTable = $('#items-table').DataTable();
+  const rowData = itemsTable.row(rowIndex).data();
+  rowData[field] = field === 'quantity' || field === 'rate' ? parseFloat(value) : value;
+  itemsTable.row(rowIndex).data(rowData).draw();
+
+  itemsTable.cell(rowIndex, 3).data((rowData.quantity * rowData.rate).toFixed(2)).draw();
+
+  const invoiceId = parseInt(document.getElementById('invoiceNo').value, 10);
+  updateInvoiceTotalInMainTable(invoiceId);
+}
+
+function updateInvoiceTotalInMainTable(invoiceId) {
+  const invoiceIndex = invoices.findIndex(inv => inv.id === invoiceId);
+  if (invoiceIndex !== -1) {
+    const newTotal = calculateInvoiceTotal(invoices[invoiceIndex].items); 
+
+    invoicesTable.cell(invoiceIndex, 5).data(newTotal + " USD").draw();
+  }
+}
+
+function addItem() {
+  const itemsTable = $('#items-table').DataTable();
+  const newItem = { name: 'New Item', quantity: 1, rate: 0 };
+  itemsTable.row.add(newItem).draw();
+}
+
+function removeItem(button, rowIndex) {
+  const row = $(button).closest('tr');
+  const table = $('#items-table').DataTable();
+  table.row(row).remove().draw();
+
+  const invoiceId = parseInt(document.getElementById('invoiceNo').value, 10);
+  updateInvoiceTotalInMainTable(invoiceId);
 }
 
 function openModal() {
@@ -82,15 +175,96 @@ function closeModal() {
   document.getElementById('invoiceModal').classList.add('hidden');
 }
 
-function updateDateTime() {
-  const now = new Date();
-  document.getElementById('date').textContent = now.toLocaleDateString();
-  document.getElementById('time').textContent = now.toLocaleTimeString();
+function saveInvoice(event) {
+  event.preventDefault();
+  const invoiceId = parseInt(document.getElementById('invoiceNo').value, 10);
+  const customer = document.getElementById('customer').value;
+  const address = document.getElementById('address').value;
+  const city = document.getElementById('city').value;
+  const date = document.getElementById('invoiceDate').value;   
+
+
+  const itemsTable = $('#items-table').DataTable();
+  const items = itemsTable.rows().data().toArray();
+
+  const invoiceIndex = invoices.findIndex(inv => inv.id === invoiceId);
+
+  if (invoiceIndex !== -1) {
+    invoices[invoiceIndex] = {
+      id: invoiceId,
+      status: invoices[invoiceIndex].status,
+      date: date,
+      customer: {
+        name: customer,
+        address: address,
+        city: city,
+      },
+      items: items
+    };
+  } else {
+    const newInvoice = {
+      id: invoices.length + 1,
+      status: 1,
+      date: date,
+      customer: {
+        name: customer,
+        address: address,
+        city: city,
+      },
+      items
+    };
+    invoices.push(newInvoice);
+  }
+
+  closeModal();
+  initializeInvoicesTable();
 }
 
-/* Set timeout, to simulate a delay 3 seconds */
+function newInvoice() {
+  document.getElementById('invoiceForm').reset();
+  setupItemsTable();
+  openModal();
+}
 
-document.addEventListener("DOMContentLoaded", function () {
-  setupInvoicesTable();
-  setInterval(updateDateTime, 1000);
+function editInvoice(invoiceId) {
+  const invoice = invoices.find(inv => inv.id === invoiceId);
+  if (invoice) {
+    document.getElementById('customer').value = invoice.customer.name;
+    document.getElementById('address').value = invoice.customer.address;
+    document.getElementById('city').value = invoice.customer.city;
+    document.getElementById('invoiceDate').value = invoice.date;
+    document.getElementById('invoiceNo').value = invoice.id;
+    setupItemsTable(invoice.items);
+    openModal();
+  }
+}
+
+function deleteInvoice(invoiceId) {
+  invoices = invoices.filter(invoice => invoice.id !== invoiceId);
+  initializeInvoicesTable();
+}
+
+function updateInvoiceStatus(invoiceId, newStatus) {
+  const invoiceIndex = invoices.findIndex(inv => inv.id === invoiceId);
+  if (invoiceIndex !== -1) {
+    invoices[invoiceIndex].status = parseInt(newStatus, 10);
+    initializeInvoicesTable();
+  }
+}
+
+function getStatusColor(status) {
+  switch (status) {
+    case STATUS_DRAFT:
+      return "text-gray-500";
+    case STATUS_SENT:
+      return "text-blue-500";
+    case STATUS_PAID:
+      return "text-green-500";
+    default:
+      return "";
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  loadApplication();
 });
